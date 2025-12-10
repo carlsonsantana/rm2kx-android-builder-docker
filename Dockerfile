@@ -60,6 +60,7 @@ ENV GAME_APK_NAME "com.mycompany.gamename"
 ENV GAME_NAME "Game Name"
 ENV GAME_VERSION_CODE "100"
 ENV GAME_VERSION_NAME "1.0.0"
+ENV GAME_METADATA_SITE "http://example.com/"
 
 # Run build
 WORKDIR /
