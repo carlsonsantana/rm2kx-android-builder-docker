@@ -5,7 +5,7 @@ ARG APKTOOL_VERSION="2.12.1"
 
 # Install dependencies
 RUN pacman -Syu --noconfirm --disable-download-timeout && \
-  pacman -S unzip jdk17-openjdk make git wget imagemagick autoconf automake libtool cmake perl patch pkgconf gcc meson --noconfirm --disable-download-timeout && \
+  pacman -S unzip jdk17-openjdk make git wget imagemagick autoconf automake libtool cmake perl patch pkgconf gcc meson oxipng --noconfirm --disable-download-timeout && \
   rm -R /var/cache/pacman/pkg/*
 RUN mkdir /apktool && \
   curl -L "https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_""$APKTOOL_VERSION"".jar" --output /apktool/apktool.jar
@@ -31,6 +31,7 @@ RUN keytool -genkey -noprompt -v \
   export BUILD_LIBLCF=1 && \
   ./0_build_everything.sh && \
   java -jar /apktool/apktool.jar d /easyrpg_buildscripts/android/Player/builds/android/app/build/outputs/apk/release/app-release.apk -o /easyrpg-android && \
+  oxipng -r -o 2 --strip safe /easyrpg-android/res && \
   rm -r ~/.gradle ~/.android ~/.local && \
   rm -r android-sdk/ arm64-v8a-toolchain/ armeabi-v7a-toolchain/ x86-toolchain/ x86_64-toolchain/ && \
   rm -r /easyrpg_buildscripts/android/Player/builds/android/app/build /easyrpg_buildscripts/android/Player/builds/android/app/.cxx && \
