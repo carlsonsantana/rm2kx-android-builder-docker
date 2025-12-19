@@ -42,10 +42,11 @@ RUN keytool -genkey -noprompt -v \
 FROM eclipse-temurin:17.0.17_10-jre-alpine-3.22
 
 # Install dependencies
-RUN apk --update --no-cache add imagemagick zip abseil-cpp-hash gtest libprotobuf && \
+RUN apk --update --no-cache add curl imagemagick zip abseil-cpp-hash gtest libprotobuf && \
   apk --update --no-cache fetch android-build-tools --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
   tar -zxvf android-build-tools-*.apk && \
   rm android-build-tools-*.apk .SIGN.RSA.alpine-devel@* .PKGINFO
+RUN curl -L "https://github.com/carlsonsantana/signmyapp/releases/download/1.0.0/signmyapp.jar" --output /opt/signmyapp.jar
 
 # Copy files from previous build
 RUN mkdir /apktool
@@ -57,12 +58,16 @@ RUN mkdir /output
 VOLUME /rpgmaker2kx_game
 VOLUME /icon.png
 VOLUME /output
+VOLUME /game_certificate.key
 
 # Environment variables
 ENV GAME_APK_NAME "com.mycompany.gamename"
 ENV GAME_NAME "Game Name"
 ENV GAME_VERSION_CODE "100"
 ENV GAME_VERSION_NAME "1.0.0"
+ENV GAME_KEYSTORE_PASSWORD ""
+ENV GAME_KEYSTORE_KEY_ALIAS ""
+ENV GAME_KEYSTORE_KEY_PASSWORD ""
 ENV GAME_METADATA_SITE "http://example.com/"
 
 # Run build

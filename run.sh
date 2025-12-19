@@ -3,8 +3,19 @@
 set -e
 
 # Remove previous apk build
-rm -f /tmp/rpgmaker2kx-unsigned.apk
-rm -f /output/rpgmaker2kx-aligned.apk
+rm -f /tmp/rpgmaker2kx-unsigned.apk /tmp/rpgmaker2kx-aligned.apk /output/rpgmaker2kx-aligned.apk /output/rpgmaker2kx-signed.apk
+
+if [ -f "/game_certificate.key" ]; then
+  if [ -z "$GAME_KEYSTORE_PASSWORD" ] || [ -z "$GAME_KEYSTORE_KEY_ALIAS" ] || [ -z "$GAME_KEYSTORE_KEY_PASSWORD" ]; then
+    echo "ERROR: Partial keystore configuration detected."
+    echo "You must provide ALL THREE variables, when pass '/game_certificate.key' VOLUME."
+    echo "Missing values for: "
+    [ -z "$GAME_KEYSTORE_PASSWORD" ] && echo "- GAME_KEYSTORE_PASSWORD"
+    [ -z "$GAME_KEYSTORE_KEY_ALIAS" ] && echo "- GAME_KEYSTORE_KEY_ALIAS"
+    [ -z "$GAME_KEYSTORE_KEY_PASSWORD" ] && echo "- GAME_KEYSTORE_KEY_PASSWORD"
+    exit 1
+  fi
+fi
 
 # Convert icons
 magick /icon.png -resize 36x36 /easyrpg-android/res/drawable-ldpi/ic_launcher.png
@@ -26,5 +37,13 @@ zip -Z deflate -vr /easyrpg-android/assets/game.zip *
 
 # Build an aligned version of the Android app
 java -jar /apktool/apktool.jar b /easyrpg-android -o /tmp/rpgmaker2kx-unsigned.apk
-zipalign -v -p 4 /tmp/rpgmaker2kx-unsigned.apk /output/rpgmaker2kx-aligned.apk
+zipalign -v -p 4 /tmp/rpgmaker2kx-unsigned.apk /tmp/rpgmaker2kx-aligned.apk
+
+if [ -f "/game_certificate.key" ]; then
+  java -jar /opt/signmyapp.jar -ks /game_certificate.key -ks-pass "$GAME_KEYSTORE_PASSWORD" -ks-key-alias "$GAME_KEYSTORE_KEY_ALIAS" -key-pass "$GAME_KEYSTORE_KEY_PASSWORD" -in /tmp/rpgmaker2kx-aligned.apk -out /output/rpgmaker2kx-signed.apk
+  rm /tmp/rpgmaker2kx-aligned.apk
+else
+  mv /tmp/rpgmaker2kx-aligned.apk /output/rpgmaker2kx-aligned.apk
+fi
+
 rm /tmp/rpgmaker2kx-unsigned.apk
