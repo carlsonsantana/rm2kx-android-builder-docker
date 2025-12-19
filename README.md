@@ -2,7 +2,7 @@
 
 This project allows you to convert **RPG Maker 2000/2003** games for **Android** using **Docker** and **[EasyRPG](https://easyrpg.org/)**.
 
-> **⚠️ Important:** The build process generates an **unsigned** `*.apk` file. You must still [align and sign your app](https://developer.android.com/build/building-cmdline#sign_manually) before it can be installed on an Android device.
+> **⚠️ Important:** The build process generates an **aligned** `*.apk` file. You must still [sign your app](https://developer.android.com/build/building-cmdline#sign_manually) before it can be installed on an Android device.
 
 ## Install
 

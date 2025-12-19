@@ -3,7 +3,8 @@
 set -e
 
 # Remove previous apk build
-rm -f /output/rpgmaker2kx-unsigned.apk
+rm -f /tmp/rpgmaker2kx-unsigned.apk
+rm -f /output/rpgmaker2kx-aligned.apk
 
 # Convert icons
 magick /icon.png -resize 36x36 /easyrpg-android/res/drawable-ldpi/ic_launcher.png
@@ -21,7 +22,9 @@ printf "version: 2.12.1\napkFileName: app-release.apk\nusesFramework:\n  ids:\n 
 
 # Create game.zip asset
 cd /rpgmaker2kx_game
-zip -Z deflate -r /easyrpg-android/assets/game.zip *
+zip -Z deflate -vr /easyrpg-android/assets/game.zip *
 
-# Build an unsigned version of the Android app
-java -jar /apktool/apktool.jar b /easyrpg-android -o /output/rpgmaker2kx-unsigned.apk
+# Build an aligned version of the Android app
+java -jar /apktool/apktool.jar b /easyrpg-android -o /tmp/rpgmaker2kx-unsigned.apk
+zipalign -v -p 4 /tmp/rpgmaker2kx-unsigned.apk /output/rpgmaker2kx-aligned.apk
+rm /tmp/rpgmaker2kx-unsigned.apk
