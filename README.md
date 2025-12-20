@@ -22,8 +22,8 @@ You must mount the following volumes when running the Docker image. These mounts
 
 * `/rpgmaker2kx_game` your RPG Maker 2000/2003 game (remove the files that Android will not use like `RPG_RT.exe`, any documentation, any extra and of course `Thumbs.db` files);
 * `/icon.png` the icon for your Android game;
-* `/output` the directory where the aligned or signed `.apk` will be created;
-* **(Optional)** `/game_certificate.key` the keystore file used to [sign the `.apk`](https://developer.android.com/build/building-cmdline#sign_manually), if passed you must pass the following environment variables `GAME_KEYSTORE_PASSWORD`, `GAME_KEYSTORE_KEY_ALIAS` and `GAME_KEYSTORE_KEY_PASSWORD`;
+* `/output` the directory where the aligned or signed `.apk` and `.aab` will be created;
+* **(Optional)** `/game_certificate.key` the keystore file used to [sign the `.apk` file](https://developer.android.com/build/building-cmdline#sign_manually) and [sign the `.aab` file](https://learn.microsoft.com/en-us/power-apps/maker/common/wrap/code-sign-aab-file), if passed you must pass the following environment variables `GAME_KEYSTORE_PASSWORD`, `GAME_KEYSTORE_KEY_ALIAS` and `GAME_KEYSTORE_KEY_PASSWORD`;
 
 ### Environment Variables
 
