@@ -45,7 +45,7 @@ FROM eclipse-temurin:17.0.17_10-jdk-alpine-3.23
 # Install dependencies
 RUN apk --update --no-cache add curl imagemagick oxipng zip abseil-cpp-hash gtest libprotobuf fmt && \
   apk --update --no-cache add android-build-tools --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/
-RUN curl -L "https://github.com/carlsonsantana/signmyapp/releases/download/1.0.0/signmyapp.jar" --output /opt/signmyapp.jar && \
+RUN curl -L "https://github.com/carlsonsantana/signmyapp/releases/download/1.1.0/signmyapp.jar" --output /opt/signmyapp.jar && \
   curl -L "https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar" --output /opt/bundletool.jar && \
   curl -L "https://github.com/Sable/android-platforms/raw/f2ca864c44f277bbc09afda0ba36437ce22105f0/android-36/android.jar" --output /opt/android.jar
 
