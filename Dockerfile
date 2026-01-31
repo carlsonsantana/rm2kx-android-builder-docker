@@ -1,4 +1,4 @@
-FROM archlinux:base-devel-20251019.0.436919 as android-sdk-builder
+FROM archlinux:base-devel as android-sdk-builder
 
 # Build arguments
 ARG APKTOOL_VERSION="2.12.1"
@@ -40,14 +40,14 @@ RUN keytool -genkey -noprompt -v \
 
 
 # Another image with only used resources
-FROM eclipse-temurin:17.0.17_10-jre-alpine-3.22
+FROM eclipse-temurin:17.0.17_10-jdk-alpine-3.23
 
 # Install dependencies
-RUN apk --update --no-cache add curl imagemagick oxipng zip abseil-cpp-hash gtest libprotobuf && \
-  apk --update --no-cache fetch android-build-tools --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
-  tar -zxvf android-build-tools-*.apk && \
-  rm android-build-tools-*.apk .SIGN.RSA.alpine-devel@* .PKGINFO
-RUN curl -L "https://github.com/carlsonsantana/signmyapp/releases/download/1.0.0/signmyapp.jar" --output /opt/signmyapp.jar
+RUN apk --update --no-cache add curl imagemagick oxipng zip abseil-cpp-hash gtest libprotobuf fmt && \
+  apk --update --no-cache add android-build-tools --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/
+RUN curl -L "https://github.com/carlsonsantana/signmyapp/releases/download/1.1.0/signmyapp.jar" --output /opt/signmyapp.jar && \
+  curl -L "https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar" --output /opt/bundletool.jar && \
+  curl -L "https://github.com/Sable/android-platforms/raw/f2ca864c44f277bbc09afda0ba36437ce22105f0/android-36/android.jar" --output /opt/android.jar
 
 # Copy files from previous build
 RUN mkdir /apktool
@@ -70,6 +70,7 @@ ENV GAME_KEYSTORE_PASSWORD ""
 ENV GAME_KEYSTORE_KEY_ALIAS ""
 ENV GAME_KEYSTORE_KEY_PASSWORD ""
 ENV GAME_METADATA_SITE "http://example.com/"
+ENV GAME_OPTIMIZATION_MINIFY_IMAGES "false"
 
 # Run build
 WORKDIR /
