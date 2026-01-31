@@ -1,4 +1,4 @@
-FROM archlinux:base-devel-20251019.0.436919 as android-sdk-builder
+FROM archlinux:base-devel as android-sdk-builder
 
 # Build arguments
 ARG APKTOOL_VERSION="2.12.1"
