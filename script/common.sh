@@ -27,15 +27,15 @@ remove_previous_build_files() {
   rm -f "$OUTPUT_ALIGNED_APK_FILE" "$OUTPUT_SIGNED_APK_FILE" "$OUTPUT_UNSIGNED_AAB_FILE" "$OUTPUT_SIGNED_AAB_FILE"
 }
 
-validate_environment_variables_filled() {
+validate_secrets_filled() {
   if [ -f "/game_certificate.key" ]; then
     if [ -z "$GAME_KEYSTORE_PASSWORD" ] || [ -z "$GAME_KEYSTORE_KEY_ALIAS" ] || [ -z "$GAME_KEYSTORE_KEY_PASSWORD" ]; then
       echo "ERROR: Partial keystore configuration detected."
       echo "You must provide ALL THREE variables, when pass '/game_certificate.key' VOLUME."
-      echo "Missing values for: "
-      [ -z "$GAME_KEYSTORE_PASSWORD" ] && echo "- GAME_KEYSTORE_PASSWORD"
-      [ -z "$GAME_KEYSTORE_KEY_ALIAS" ] && echo "- GAME_KEYSTORE_KEY_ALIAS"
-      [ -z "$GAME_KEYSTORE_KEY_PASSWORD" ] && echo "- GAME_KEYSTORE_KEY_PASSWORD"
+      echo "Missing secrets: "
+      [ -z "$GAME_KEYSTORE_PASSWORD" ] && echo "- /run/secrets/game_keystore_password"
+      [ -z "$GAME_KEYSTORE_KEY_ALIAS" ] && echo "- /run/secrets/game_keystore_key_alias"
+      [ -z "$GAME_KEYSTORE_KEY_PASSWORD" ] && echo "- /run/secrets/game_keystore_key_password"
       exit 1
     fi
   fi

@@ -11,7 +11,7 @@ source "/script/common.sh"
 
 init_keystore_variables
 remove_previous_build_files
-validate_environment_variables_filled
+validate_secrets_filled
 replace_icons
 
 # Rename APK name and application ID
