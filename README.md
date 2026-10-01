@@ -155,6 +155,10 @@ For a detailed comparison, see the official [Android App Bundle documentation](h
 * **The game doesn't start or assets are missing.** Make sure the `/rpgmaker2kx_game` volume points at the folder that contains `RPG_RT.ldb` and `RPG_RT.lmt` at its root, not a parent folder that contains the game in a subdirectory.
 * **The build can't be installed on the device.** An unsigned APK cannot be installed; use the [Signed build](#signed-build).
 
+## Android ports made with this
+
+* [RM2K Standalone Game](https://play.google.com/store/apps/details?id=br.com.carlsonsantana.gamedev.rm2k_standalone_game) — a game of mine, published on Google Play.
+
 ## Source
 
 The source code is available on [GitHub](https://github.com/carlsonsantana/easyrpg-android-builder-docker).
