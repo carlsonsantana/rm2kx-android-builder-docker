@@ -121,7 +121,7 @@ Signing requires a keystore file. If you don't have one yet, you can create it w
 keytool -genkeypair -v \
   -keystore game_certificate.key \
   -alias game_cert \
-  -keyalg RSA -keysize 2048 -validity 10000
+  -keyalg RSA -keysize 4096 -validity 10000
 ```
 
 `keytool` will prompt you for a keystore password (use it as `GAME_KEYSTORE_PASSWORD`), some identity details, and a key password (use it as `GAME_KEYSTORE_KEY_PASSWORD`). The value passed to `-alias` (here `game_cert`) is your `GAME_KEYSTORE_KEY_ALIAS`.
